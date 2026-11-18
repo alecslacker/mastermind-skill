@@ -19,20 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----------------------------------------------------------------------------
-CATATAN RISIKO (bagian dari penjelasan lisensi, bukan penambah syarat)
-
-Perangkat lunak ini adalah perkakas ofensif. Alat di dalamnya dapat:
-
-- mengirim request ke sistem pihak lain;
-- menulis, menambal, dan memulihkan berkas biner;
-- membangun kit phishing yang mengumpulkan kredensial dan OTP;
-- membangun implant yang menetap dan menghubungi kanal luar;
-- memvalidasi nomor kartu dan data breach.
-
-Semua akibat pemakaian — termasuk pemblokiran, kerusakan data, kebocoran
-kredensial, dan konsekuensi hukum terhadap target yang disentuh — menjadi
-tanggung jawab pemakai. Lisensi tidak menjamin alat cocok untuk target,
-versi, atau beban kerja tertentu. MIT tetap dipilih: pemakaian bebas,
-termasuk komersial, dengan tetap menyertakan notis hak cipta.

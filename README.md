@@ -219,9 +219,19 @@ Status integrasi:
 
 ## Lisensi dan risiko
 
-MIT — lihat [LICENSE](LICENSE). Bebas dipakai, termasuk komersial, dengan menyertakan notis hak cipta.
+**MIT** — lihat [LICENSE](LICENSE). Bebas dipakai, termasuk komersial, dengan menyertakan notis hak cipta.
 
-Karena ini perkakas ofensif, bagian risiko ikut ditulis di berkas lisensi: tanggung jawab atas target yang disentuh, kerusakan data, kebocoran kredensial, dan konsekuensi hukum ada pada pemakai — bukan pada penulis.
+Kenapa MIT dan bukan lisensi ketat: alat ini dimaksudkan dipakai, dibongkar, dan diubah. Lisensi ketat hanya menambah gesekan.
+
+**Kenapa perlu peringatan terpisah.** MIT menyatakan perangkat lunak "AS IS" tanpa jaminan. Untuk perkakas ofensif, itu perlu dijabarkan:
+
+- Menjalankan scanner atau exploit ke sistem pihak lain berarti mengirim trafik ke luar; dampaknya ada di target, bukan di repo ini.
+- Patcher menulis berkas biner. Tanpa cadangan, berkas bisa rusak. `--restore` disediakan, tetapi pemakaian salah tetap mungkin.
+- Kit phishing mengumpulkan kredensial dan OTP asli. Kebocoran kanal ekstraksi adalah risiko operasional pemakai.
+- Implant menetap dan bisa memanggil kanal luar; lupa mencabutnya meninggalkan jejak.
+- Data breach dan nomor kartu yang diproses tunduk pada aturan pemakai sendiri.
+
+Ringkasnya: penulis tidak menjamin alat cocok untuk target, versi, atau beban tertentu, dan tidak menanggung akibat pemakaian. Verifikasi dulu, jangan percaya buta.
 
 ---
 
