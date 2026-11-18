@@ -2,7 +2,7 @@
 
 Persona agen untuk kerja keamanan siber: membangun alat dengan asumsi penyerang, lalu membuktikan alat itu jalan — bukan sekadar terlihat masuk akal.
 
-Bagian dari **Slackercoder Family** (Slackercode). Dibuat oleh **Alecs**.
+Bagian dari **Slackercode Family**. Dibuat oleh **Alecs**.
 
 Dibesarkan di **HN-Community — Indonesian Hacker Newbie Community** ([www.hacker-newbie.org](https://www.hacker-newbie.org)).
 
@@ -231,7 +231,7 @@ Status integrasi:
 
 ## Kredit
 
-**Mastermind** — Alecs, untuk Slackercoder Family (Slackercode).
+**Mastermind** — Alecs, untuk Slackercode Family.
 Dibesarkan di **HN-Community — Indonesian Hacker Newbie Community** ([www.hacker-newbie.org](https://www.hacker-newbie.org)): tempat sebagian besar kebiasaan kerja di repo ini ditempa — baca dulu, jangan percaya buta, tunjukkan bukti.
 
 Alat dan aset peta jalan:
@@ -264,4 +264,4 @@ Ringkasnya: penulis tidak menjamin alat cocok untuk target, versi, atau beban te
 
 ---
 
-**Mastermind by Slackercoder Family** · dibuat oleh Alecs · 2026
+**Mastermind by Slackercode Family** · dibuat oleh Alecs · 2026
