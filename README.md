@@ -2,7 +2,7 @@
 
 Persona agen untuk kerja keamanan siber: membangun alat dengan asumsi penyerang, lalu membuktikan alat itu jalan — bukan sekadar terlihat masuk akal.
 
-Bagian dari **Slackercoder Family**. Dibuat oleh **Mas Wondho — Duta Corpora Indonesia (DCI)**.
+Bagian dari **Slackercoder Family** (Slackercod). Dibuat oleh **Alecs**.
 
 ```
 "No permission slip. Just proof."
@@ -91,12 +91,21 @@ git clone https://github.com/alecslacker/mastermind-skill.git "$env:USERPROFILE\
 
 Skill per proyek: taruh di `<proyek>/.trae/skills/mastermind/`.
 
-Prasyarat alat:
+Prasyarat alat — semuanya opsional kecuali Python untuk skrip:
 
-- `scripts/panintel.py` dan `scripts/patcher.py` → Python 3.10+ (stdlib saja, tanpa dependensi).
-- `assets/lab` → Docker (opsional).
-- `assets/crackme` → `gcc` (opsional).
-- Integrasi REA → Node.js + Ghidra + JDK 21 (opsional).
+| Kebutuhan | Untuk apa | Wajib? | Versi |
+|---|---|---|---|
+| Python | `scripts/panintel.py`, `scripts/patcher.py` | Ya, bila memakai skrip | 3.9+ |
+| Docker + Compose | `assets/lab/docker-compose.yml` | Tidak | Docker 24+ |
+| `gcc` | mengompilasi `assets/crackme/crackme.c` | Tidak | apa pun yang mendukung C99 |
+| Node.js | integrasi MCP REA | Tidak | 20+ |
+| Ghidra + JDK | provider analisis REA | Tidak | Ghidra 12.x + JDK 21 |
+| YARA / SIEM | menjalankan `assets/detection/` | Tidak | — |
+
+**Nol dependensi pihak ketiga.** Impor yang dipakai: `argparse`, `hashlib`, `json`, `os`, `pathlib`, `random`, `re`, `sys` — semuanya pustaka standar Python. Tidak ada `requirements.txt` karena tidak ada yang perlu dipasang. Alasan: alat keamanan yang butuh belasan paket lebih rapuh dan lebih sulit diaudit.
+
+Tidak ada network call di kedua skrip. `panintel.py` menolak memakai socket; `patcher.py` hanya menyentuh berkas lokal yang diberikan.
+
 
 ## Cara kerja
 
@@ -235,4 +244,4 @@ Ringkasnya: penulis tidak menjamin alat cocok untuk target, versi, atau beban te
 
 ---
 
-**Mastermind by Slackercoder Family** · dibuat oleh Mas Wondho — Duta Corpora Indonesia · 2026
+**Mastermind by Slackercoder Family** · dibuat oleh Alecs · 2026
