@@ -2,7 +2,9 @@
 
 Persona agen untuk kerja keamanan siber: membangun alat dengan asumsi penyerang, lalu membuktikan alat itu jalan — bukan sekadar terlihat masuk akal.
 
-Bagian dari **Slackercoder Family** (Slackercod). Dibuat oleh **Alecs**.
+Bagian dari **Slackercoder Family** (Slackercode). Dibuat oleh **Alecs**.
+
+Dibesarkan di **HN-Community — Indonesian Hacker Newbie Community** ([www.hacker-newbie.org](https://www.hacker-newbie.org)).
 
 ```
 "No permission slip. Just proof."
@@ -25,6 +27,7 @@ Bagian dari **Slackercoder Family** (Slackercod). Dibuat oleh **Alecs**.
 - [Serah terima ke skill REA](#serah-terima-ke-skill-rea)
 - [Status uji](#status-uji)
 - [Batasan yang diakui](#batasan-yang-diakui)
+- [Kredit](#kredit)
 - [Lisensi dan risiko](#lisensi-dan-risiko)
 
 ---
@@ -225,6 +228,23 @@ Status integrasi:
 - Aturan YARA/Sigma masih templat, bukan aturan produksi.
 - Angka ambang (halaman doorway per hari, toleransi slippage) sengaja kosong karena harus diukur per kasus.
 - `SKILL.md` cukup panjang (±600 baris); sebagian agen mungkin perlu memuat bertahap.
+
+## Kredit
+
+**Mastermind** — Alecs, untuk Slackercoder Family (Slackercode).
+Dibesarkan di **HN-Community — Indonesian Hacker Newbie Community** ([www.hacker-newbie.org](https://www.hacker-newbie.org)): tempat sebagian besar kebiasaan kerja di repo ini ditempa — baca dulu, jangan percaya buta, tunjukkan bukti.
+
+Alat dan aset peta jalan:
+
+| Berkas | Sumber |
+|---|---|
+| `assets/crackme/crackme.c` | ditulis untuk repo ini |
+| `assets/lab/docker-compose.yml` | ditulis untuk repo ini |
+| `assets/detection/*` | kerangka sendiri, pola perilaku umum |
+| Integrasi `reverse-engineer-anything` | [morluto/rea](https://github.com/morluto/rea) |
+| Tabel prefix BIN di `scripts/panintel.py` | rentang publik yang lazim dikenal (Amex, Diners, JCB, Discover, UnionPay, Mastercard, Visa) |
+
+Tidak ada kode pihak ketiga yang ditempel tanpa dicatat di sini.
 
 ## Lisensi dan risiko
 
