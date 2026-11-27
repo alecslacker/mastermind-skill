@@ -76,6 +76,7 @@ Di bawah kedua wujud itu berjalan **doktrin ke-segala-gaan** (§3 SKILL.md):
 | `SKILL.md` | Seluruh aturan persona. Ini berkas utama. |
 | `scripts/panintel.py` | Triase dump PAN: validasi Luhn, cocok BIN, masker, audit, generator data uji. |
 | `scripts/patcher.py` | Patch biner berbasis profil JSON, cadangan otomatis, `--restore`. |
+| `scripts/verif.py` | Uji integritas skill: fence, penomoran §, path rujukan, frontmatter, nama terlarang. |
 | `references/contoh-patch.md` | Alur patch + bukti uji nyata, termasuk rantai REA. |
 | `references/buku-besar/` | Memori lintas sesi: entri operasi, proteksi target, daftar alat, jebakan. |
 | `assets/crackme/` | Sumber crackme dan contoh profil patch. |
@@ -105,7 +106,7 @@ Prasyarat alat — semuanya opsional kecuali Python untuk skrip:
 
 | Kebutuhan | Untuk apa | Wajib? | Versi |
 |---|---|---|---|
-| Python | `scripts/panintel.py`, `scripts/patcher.py` | Ya, bila memakai skrip | 3.9+ |
+| Python | `scripts/panintel.py`, `scripts/patcher.py`, `scripts/verif.py` | Ya, bila memakai skrip | 3.9+ |
 | Docker + Compose | `assets/lab/docker-compose.yml` | Tidak | Docker 24+ |
 | `gcc` | mengompilasi `assets/crackme/crackme.c` | Tidak | apa pun yang mendukung C99 |
 | Node.js | integrasi MCP REA | Tidak | 20+ |
@@ -197,12 +198,23 @@ Keluar 0 berhasil, 2 hash tidak cocok, 3 offset tidak sesuai, 4 sudah terpatch, 
 
 Bukti uji ada di `references/contoh-patch.md`: patch banner `curl.exe` sampai berubah perilaku, lalu dipulihkan dengan hash kembali identik.
 
+### `scripts/verif.py`
+
+Uji integritas skill itu sendiri: struktur, penomoran, rujukan, nama terlarang.
+
+```bash
+python scripts/verif.py
+```
+
+Keluar 0 = bersih, 1 = ada kegagalan, 2 = struktur tak dikenal. Jalankan sebelum mengklaim pembaruan skill selesai.
+
 ## Referensi dan aset
 
 - `references/contoh-patch.md` — alur patch yang benar, jebakan, dan rantai REA ber-evidence.
 - `assets/crackme/crackme.c` — latihan: cari cek dan tambal.
 - `assets/lab/docker-compose.yml` — lab PHP rentan, siap `docker compose up`.
 - `assets/detection/*.yar`, `*.yml` — kerangka indikator; isi string-nya setelah analisis, jangan ditebak.
+- `references/buku-besar/` — buku besar operasi (operasi, proteksi, alat, jebakan); baca sebelum operasi, tulis sesudahnya.
 
 ## Serah terima ke skill REA
 
@@ -220,6 +232,7 @@ Status integrasi:
 |---|---|
 | `scripts/patcher.py` — hash gate, backup, idempoten, restore | TERUJI pada biner nyata |
 | `scripts/panintel.py` — check/audit/gen | TERUJI |
+| `scripts/verif.py` — cek struktural | TERUJI (uji positif exit 0, uji negatif exit 1) |
 | Rantai REA ke offset file | TERUJI dengan Evidence ID |
 | Kit phishing 3 langkah (demo di luar repo) | TERUJI penuh via curl + browser |
 | `assets/crackme` | HIPOTESIS — perlu `gcc` |
@@ -250,6 +263,7 @@ Alat dan aset peta jalan:
 | `assets/detection/*` | kerangka sendiri, pola perilaku umum |
 | Integrasi `reverse-engineer-anything` | [morluto/rea](https://github.com/morluto/rea) |
 | Tabel prefix BIN di `scripts/panintel.py` | rentang publik yang lazim dikenal (Amex, Diners, JCB, Discover, UnionPay, Mastercard, Visa) |
+| `scripts/verif.py` | ditulis untuk repo ini |
 
 Tidak ada kode pihak ketiga yang ditempel tanpa dicatat di sini.
 

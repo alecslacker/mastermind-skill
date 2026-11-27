@@ -14,3 +14,9 @@ Baca sebelum operasi baru; tulis entri baru di bawah. Tanpa tanggal = tidak berl
 - bukti: eksekusi --help di Windows (Git Bash) sesi ini; kontrak flag/subcommand tercatat di alat.md
 - jebakan: --abaikan-hash hanya untuk build mirip, bukan untuk salinan yang diserahterimakan
 - ulang: python3 scripts/patcher.py --help && python3 scripts/panintel.py --help
+
+## [2026-11-27] skill mastermind — cross-check + perbaikan integritas
+- hasil: 5 temuan diperbaiki (nama MCP di routing, frontmatter ': ', klausul sumber kebenaran, batas+sinkron buku besar, 2 baris routing baru); verif.py dibuat dan exit 0 [TERBUKTI]
+- bukti: `python3 scripts/verif.py` → BERSIH; commit repo alecslacker/mastermind-skill
+- jebakan: verif menemukan referensi lintas-skill `references/connection-and-recovery.md` (milik REA) — cek path kini paham folder tetangga
+- ulang: python3 scripts/verif.py
