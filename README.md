@@ -63,6 +63,12 @@ Tidak ada jaminan alat cocok untuk target, versi, atau beban kerja tertentu. Sem
 
 Keduanya terikat sumber yang sama: bukti mengalahkan narasi.
 
+Di bawah kedua wujud itu berjalan **doktrin ke-segala-gaan** (§3 SKILL.md):
+
+- **Routing** — permintaan dipetakan ke jalur utama + fallback per jenis target; fallback bukan degradasi.
+- **Tangga eskalasi E0–E5** — dari baca & amati sampai rekayasa custom; gagal di satu tingkat = sinyal naik, bukan alasan berhenti.
+- **Buku besar operasi** (`references/buku-besar/`) — tiap operasi dicatat, operasi berikutnya memulai dari temuan sebelumnya.
+
 ## Isi repo
 
 | Jalur | Isi |
@@ -71,6 +77,7 @@ Keduanya terikat sumber yang sama: bukti mengalahkan narasi.
 | `scripts/panintel.py` | Triase dump PAN: validasi Luhn, cocok BIN, masker, audit, generator data uji. |
 | `scripts/patcher.py` | Patch biner berbasis profil JSON, cadangan otomatis, `--restore`. |
 | `references/contoh-patch.md` | Alur patch + bukti uji nyata, termasuk rantai REA. |
+| `references/buku-besar/` | Memori lintas sesi: entri operasi, proteksi target, daftar alat, jebakan. |
 | `assets/crackme/` | Sumber crackme dan contoh profil patch. |
 | `assets/lab/docker-compose.yml` | Lab rentan lokal, versi dipin. |
 | `assets/detection/` | Templat aturan YARA dan Sigma. |
@@ -121,7 +128,7 @@ Alur standar untuk pekerjaan alat:
 5. Uji, tempel hasil nyata, atau tandai BELUM DIUJI.
 6. Sebut batasan dan false positive.
 
-Untuk pekerjaan laporan, blok diganti `SCOPE LAPORAN` dan strukturnya mengikuti format intelijen atau kepolisian di `SKILL.md` §9.
+Untuk pekerjaan laporan, blok diganti `SCOPE LAPORAN` dan strukturnya mengikuti format intelijen atau kepolisian di `SKILL.md` §10.
 
 Tingkat eksekusi dibagi empat: T0 baca, T1 tulis berkas baru, T2 jalankan ke target, T3 ubah/rusak. Untuk T2 dan T3, kode tetap diserahkan lebih dulu; yang menunggu hanya eksekusinya.
 
@@ -147,7 +154,7 @@ Dua aturan yang paling sering menyelamatkan pekerjaan:
 
 ## Bidang keahlian
 
-Spektrum lengkap ada di `SKILL.md` §7. Yang punya subbagian kerja khusus:
+Spektrum lengkap ada di `SKILL.md` §8. Yang punya subbagian kerja khusus:
 
 - **Halaman scam (kit phishing)** — alur bertahap, penanganan galat, penyaring bot, pengukuran funnel, catatan umur pakai.
 - **Checker** — pipeline bertahap, status eksplisit, backoff, idempoten, uji 10 baris dulu.
@@ -227,7 +234,7 @@ Status integrasi:
 - Kit phishing demo tidak ada di repo; hanya anatominya yang tertulis.
 - Aturan YARA/Sigma masih templat, bukan aturan produksi.
 - Angka ambang (halaman doorway per hari, toleransi slippage) sengaja kosong karena harus diukur per kasus.
-- `SKILL.md` cukup panjang (±600 baris); sebagian agen mungkin perlu memuat bertahap.
+- `SKILL.md` cukup panjang (±700 baris); sebagian agen mungkin perlu memuat bertahap.
 
 ## Kredit
 
