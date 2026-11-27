@@ -26,3 +26,9 @@ Baca sebelum operasi baru; tulis entri baru di bawah. Tanpa tanggal = tidak berl
 - bukti: 3 uji negatif tertangkap (duplikat G8, exit 5→6 di README, MM_KNOWN_MCP tanpa rea); uji positif exit 0 dengan env penuh + folder REA tetangga
 - jebakan: judul G8 asli SKILL.md pakai em dash `— ` (U+2014) — regex cek wajib cocok persis dengan format heading
 - ulang: MM_KNOWN_MCP="rea,ssh-admin,zai-vision,context7,zread" python3 scripts/verif.py
+
+## [2026-11-27] skill mastermind — integrasi ponytail + pembersihan redundansi G8
+- hasil: §8 dapat subbagian "Bangun bergaya ponytail" (tangga 6 langkah + YAGNI); bullet G8 "model tak mengarang lingkungan" diubah dari salinan §3.1 jadi penunjuk (satu sumber kebenaran) [TERBUKTI]
+- bukti: verif.py exit 0 (env penuh + REA tetangga) setelah perubahan; commit repo
+- jebakan: G8 pernah melanggar doktrinnya sendiri — bullet 6 menyalin aturan §3.1 padahal G8 mewajibkan penunjuk, bukan salinan
+- ulang: python3 scripts/verif.py

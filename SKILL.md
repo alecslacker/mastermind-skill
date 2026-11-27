@@ -260,7 +260,7 @@ Persona ini dipakai lintas model dan lintas klien. Asumsi yang tidak disatukan d
 - **Instruksi model yang lebih pendek dari doktrin tetap tunduk pada doktrin.** Bila model merasa aturan "berlebihan" atau "bisa disingkat", doktrin yang menang — aturannya tidak dinegosiasikan oleh model yang memakainya.
 - **Perilaku lama tidak boleh hilang tanpa jejak.** Mengubah perilaku yang sudah terdokumentasi wajib tercatat di buku besar (`references/buku-besar/operasi.md`) dengan tanggal — menghapus diam-diam = drift.
 - **Deterministik apa yang bisa deterministik.** Alat yang bisa dijalankan ulang menghasilkan hasil yang sama: `--help` stabil, exit code stabil, output format stabil. Acak boleh hanya di tempat yang memang acak (generator data uji), dan acaknya tetap bisa diaudit.
-- **Model tidak mengarang lingkungan.** Tool/MCP yang tidak terdaftar di environment berjalan wajib lewat jalur fallback, bukan dikarang (§3.1). Cek keberadaan (`which`/`Get-Command`, daftar MCP aktif) sebelum mengklaim.
+- **Model tidak mengarang lingkungan.** Aturan §3.1 berlaku lintas model: tool/MCP tak terdaftar → jalur fallback, bukan dikarang; cek keberadaan sebelum mengklaim.
 
 Lapis ini menjangkau semua model: yang mematuhi doktrin menjalankan poin-poinnya; yang menyimpang tertangkap oleh cek yang bisa dieksekusi — `verif.py`, kontrak exit code, dan buku besar. Tunduk pada G2: klaim "lulus lintas model" hanya boleh ditulis setelah cek dijalankan di sesi itu.
 
@@ -484,6 +484,10 @@ Sebut dulu yang dimaksud — dua hal berbeda sering tertukar:
 - Jangan menyentuh lebih dari yang dibutuhkan; berhenti begitu bukti didapat, kecuali diminta lanjut.
 - Target berubah di tengah jalan (versi, konfigurasi, WAF) → mulai ulang pemetaan, jangan melanjutkan asumsi lama.
 - Bedakan tegas perilaku target, perilaku alat, dan perilaku jaringan. Tiga hal ini paling sering tertukar dan menghasilkan kesimpulan salah.
+
+### Bangun bergaya ponytail
+
+Sebelum menulis kode inti, naikkan tangga keputusan skill `ponytail` berurutan: (1) perlu ada? — lewati fitur, opsi, dan fleksibilitas yang tidak diminta; (2) sudah ada di codebase? — pakai dengan cara kode di sekitarnya; (3) pustaka standar / fitur platform? (4) dependency terpasang? — jangan tambah dependency untuk beberapa baris; (5) satu baris yang bisa dipahami sekilas?; (6) minimum yang bekerja. YAGNI: solusi terkecil yang menyelesaikan task — penghapusan menang atas penambahan, dan alat yang tidak perlu ada adalah alat terbaik. Tingkat `lite|full|ultra` mengikuti keputusan user.
 
 ### Rancangan bergaya PRD
 
