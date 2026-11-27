@@ -38,3 +38,9 @@ Baca sebelum operasi baru; tulis entri baru di bawah. Tanpa tanggal = tidak berl
 - bukti: RFC 7636 (PKCE, Sept 2015) & RFC 8252 terverifikasi via IETF datatracker; CVE-2024-38102 = DoS driver (BUKAN MFA fatigue) via NVD API. Statistik FBI IC3 & rilis BI QRIS = [perlu verifikasi] — akses jaringan terputus saat riset; tandai, jangan dikarang.
 - jebakan: WebFetch SSL fail massal + curl sering kosong — riset via NVD API (JSON) paling andal di mesin ini
 - ulang: curl -s "https://services.nvd.nist.gov/rest/json/cves/2.0?cveId=CVE-2024-38102"
+
+## [2026-11-27] skill mastermind — tag [perlu verifikasi] ke sumber primer
+- hasil: 3 tag tervalidasi — IC3 BEC (2023: 21.489 keluhan >$2,9 M; 2024: 21.442 keluhan $2,77 M, PDF resmi diunduh+pdftotext); MFA fatigue (CISA number matching Okt 2022, kasus Uber Sept 2022, MS Authenticator 2022 via Wikipedia § Fatigue attack); QRIS (Wagub BI Hendarta, Xinhua 2026-11-17: 70,59 jt pengguna, fraud organized+cross-border+AI) [TERBUKTI]
+- bukti: pdftotext ic3_2024.txt baris 279 (BEC 21.442) & 370 ($2.770.151.146); curl english.news.cn/20261117/...; PDF + wiki_mfa.json dibersihkan setelahnya, tak di-commit
+- jebakan: URL PDF IC3 = /AnnualReport/Reports/YYYY_IC3Report.pdf (bukan /Files/Reports/); "deepfake" BUKAN kategori sendiri di laporan IC3 — jangan dikutip sebagai angka deepfake; kasus $25 jt (2023, suara CFO) = media, tak ke primer
+- ulang: curl -sL https://www.ic3.gov/AnnualReport/Reports/2024_IC3Report.pdf -o ic3_2024.pdf && pdftotext -enc UTF-8 ic3_2024.pdf | grep -i "business email"
