@@ -8,12 +8,16 @@ Tanpa argumen, root = dua level di atas berkas ini (root skill).
 
 Cek: frontmatter (nama folder, format description), jumlah fence,
 penomoran section, path rujukan yang ada, nama terlarang/penggalan ejaan,
-keberadaan buku besar dan skrip.
+keberadaan buku besar dan skrip, urutan guardrail G0–G8,
+kesetaraan exit code docstring↔README (G8), dan nama MCP yang dirujuk
+(hanya bila env MM_KNOWN_MCP diset — daftar koma; tidak diset = dilewati,
+tidak pernah gagal).
 
 Exit: 0 = bersih, 1 = ada kegagalan, 2 = struktur tak dikenal.
 Author: Alecs — Slackercode Family
 Copyright (c) 2026 Alecs (Slackercode Family)
 """
+import os
 import re
 import sys
 from pathlib import Path
@@ -106,12 +110,56 @@ def cek(root):
         if not (root / "scripts" / berkas).is_file():
             gagal.append("skrip tidak ada: scripts/%s" % berkas)
 
+    # 7. (G8) guardrail G0–G8 berurutan mulai G0
+    urutan = [int(m.group(1)) for m in re.finditer(r"^### G(\d+) — ", teks, re.M)]
+    if urutan != list(range(len(urutan))):
+        gagal.append("guardrail G tidak berurutan mulai G0: %s" % urutan)
+
+    # 8. (G8) exit code: docstring skrip vs README harus setara
+    isi_readme = (root / "README.md").read_text(encoding="utf-8")
+    teks_rm = re.sub(r"```.*?```", "", isi_readme, flags=re.S)
+    for skrip in ["panintel.py", "patcher.py"]:
+        isi = (root / "scripts" / skrip).read_text(encoding="utf-8")
+        # docstring: segmen dari "Exit code:" sampai baris kosong
+        m = re.search(r"Exit code:\s*", isi, re.I)
+        if not m:
+            gagal.append("exit code tidak terdokumentasi di docstring: scripts/%s" % skrip)
+            continue
+        segmen = isi[m.end():].split("\n\n")[0]
+        kdoc = {int(n) for n in re.findall(r"\b(\d{1,2})\b", segmen)}
+        blok = re.search(r"### `scripts/%s`.*?(?=\n### |\n## |\Z)" % re.escape(skrip),
+                         teks_rm, re.S)
+        if not blok:
+            gagal.append("blok README tidak ditemukan: scripts/%s" % skrip)
+            continue
+        kreadme = set()
+        for baris in blok.group(0).splitlines():
+            if baris.lstrip().startswith("Keluar"):
+                kreadme = {int(n) for n in re.findall(r"\b(\d{1,2})\b", baris)}
+        if not kreadme:
+            gagal.append("exit code tidak terdokumentasi di README: scripts/%s" % skrip)
+            continue
+        if kdoc != kreadme:
+            gagal.append("exit code %s tak setara: docstring %s vs README %s (G8)" %
+                         (skrip, sorted(kdoc), sorted(kreadme)))
+
+    # 9. (G8) nama MCP yang dirujuk — hanya bila MM_KNOWN_MCP diset (daftar koma)
+    dikenal = os.environ.get("MM_KNOWN_MCP", "")
+    if dikenal:
+        daftar = {t.strip() for t in dikenal.split(",") if t.strip()}
+        luar = "\n".join(baris_di_luar_fence(teks))
+        for baris in luar.splitlines():
+            for nama in re.findall(r"MCP `([a-z0-9_-]+)`", baris):
+                if nama not in daftar:
+                    gagal.append("MCP dirujuk tapi tak dikenal di environment: %s "
+                                 "(set MM_KNOWN_MCP dari mcp.json/daftar aktif)" % nama)
+
     return gagal, peringat
 
 
 def main():
     if len(sys.argv) > 2:
-        print("pakai: python3 scripts/verif.py [root_skill]")
+        print("pakai: python3 scripts/verif.py [root_skill]  (env MM_KNOWN_MCP=koma:daftar_mcp utk cek nama MCP)")
         return 2
     root = Path(sys.argv[1]) if len(sys.argv) == 2 else Path(__file__).resolve().parent.parent
     if not root.is_dir():

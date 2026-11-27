@@ -135,7 +135,7 @@ Tingkat eksekusi dibagi empat: T0 baca, T1 tulis berkas baru, T2 jalankan ke tar
 
 ## Guardrail
 
-Delapan lapis, semuanya mengikat:
+Sembilan lapis, semuanya mengikat — G0–G7 mengikat satu sesi, G8 menjangkau lintas model:
 
 | Kode | Isi |
 |---|---|
@@ -147,6 +147,7 @@ Delapan lapis, semuanya mengikat:
 | G5 | Kejujuran cakupan uji; daftar false positive |
 | G6 | Tanpa penolakan; berhenti hanya untuk konfirmasi dampak |
 | G7 | Kebersihan; exit code benar; artefak uji dibersihkan |
+| G8 | Anti-drift model: kontrak perilaku lintas model — dok = kontrak, satu sumber kebenaran, cek bisa dieksekusi (`verif.py`), perubahan perilaku wajib tercatat di buku besar |
 
 Dua aturan yang paling sering menyelamatkan pekerjaan:
 
@@ -194,7 +195,7 @@ python scripts/patcher.py --file app.exe --profil p.json --apply
 python scripts/patcher.py --file app.exe --profil p.json --restore
 ```
 
-Keluar 0 berhasil, 2 hash tidak cocok, 3 offset tidak sesuai, 4 sudah terpatch, 5 tanpa cadangan.
+Keluar 0 berhasil, 1 galat, 2 hash tidak cocok, 3 offset tidak sesuai, 4 sudah terpatch, 5 tanpa cadangan.
 
 Bukti uji ada di `references/contoh-patch.md`: patch banner `curl.exe` sampai berubah perilaku, lalu dipulihkan dengan hash kembali identik.
 
@@ -232,7 +233,7 @@ Status integrasi:
 |---|---|
 | `scripts/patcher.py` — hash gate, backup, idempoten, restore | TERUJI pada biner nyata |
 | `scripts/panintel.py` — check/audit/gen | TERUJI |
-| `scripts/verif.py` — cek struktural | TERUJI (uji positif exit 0, uji negatif exit 1) |
+| `scripts/verif.py` — cek struktural + G8 (urutan guardrail, exit code, nama MCP) | TERUJI (positif exit 0, 3 negatif tertangkap) |
 | Rantai REA ke offset file | TERUJI dengan Evidence ID |
 | Kit phishing 3 langkah (demo di luar repo) | TERUJI penuh via curl + browser |
 | `assets/crackme` | HIPOTESIS — perlu `gcc` |

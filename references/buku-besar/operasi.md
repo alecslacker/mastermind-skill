@@ -20,3 +20,9 @@ Baca sebelum operasi baru; tulis entri baru di bawah. Tanpa tanggal = tidak berl
 - bukti: `python3 scripts/verif.py` → BERSIH; commit repo alecslacker/mastermind-skill
 - jebakan: verif menemukan referensi lintas-skill `references/connection-and-recovery.md` (milik REA) — cek path kini paham folder tetangga
 - ulang: python3 scripts/verif.py
+
+## [2026-11-27] skill mastermind — G8 Anti-Drift Model + cek eksekusi
+- hasil: lapis G8 baru di §4 (8→9 lapis); verif.py +3 cek: urutan G0–G8, exit code docstring↔README setara, nama MCP via env MM_KNOWN_MCP [TERBUKTI]
+- bukti: 3 uji negatif tertangkap (duplikat G8, exit 5→6 di README, MM_KNOWN_MCP tanpa rea); uji positif exit 0 dengan env penuh + folder REA tetangga
+- jebakan: judul G8 asli SKILL.md pakai em dash `— ` (U+2014) — regex cek wajib cocok persis dengan format heading
+- ulang: MM_KNOWN_MCP="rea,ssh-admin,zai-vision,context7,zread" python3 scripts/verif.py
