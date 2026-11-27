@@ -23,3 +23,15 @@ desktop.ini
 *.snap
 *.yar.uji
 rea-*/
+
+# Peta codebase lokal (generated — jangan pernah di-commit)
+graphify-out/
+
+# State sesi agen
+.v2c/
+mm-tmp/
+
+# Artefak riset sementara (laporan IC3, ekstraksi teks, cache wiki)
+ic3_*.pdf
+ic3_*.txt
+wiki_mfa.json

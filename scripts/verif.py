@@ -7,7 +7,9 @@ Jalankan dari mana saja:
 Tanpa argumen, root = dua level di atas berkas ini (root skill).
 
 Cek: frontmatter (nama folder, format description), jumlah fence,
-penomoran section, path rujukan yang ada, nama terlarang/penggalan ejaan,
+penomoran section, path rujukan yang ada (root, folder tetangga, atau
+lokasi pemasangan skill yang lazim — env MM_SKILL_DIRS menambah lokasi),
+nama terlarang/penggalan ejaan,
 keberadaan buku besar dan skrip, urutan guardrail G0–G8,
 kesetaraan exit code docstring↔README (G8), dan nama MCP yang dirujuk
 (hanya bila env MM_KNOWN_MCP diset — daftar koma; tidak diset = dilewati,
@@ -49,6 +51,24 @@ def baris_di_luar_fence(teks):
     return luar
 
 
+def dir_pencarian_lintas(root):
+    """Direktori induk yang masing-masing memuat folder skill lain:
+    induk repo (folder tetangga) + lokasi pemasangan skill yang lazim
+    (~/.zcode, ~/.agents, ~/.trae, ~/.claude). Env MM_SKILL_DIRS
+    (daftar koma) menambah lokasi pemasangan yang tidak standar."""
+    lokasi = [root.parent]
+    home = Path.home()
+    for rel in (".zcode/skills", ".agents/skills", ".trae/skills", ".claude/skills"):
+        kandidat = home / rel
+        if kandidat.is_dir():
+            lokasi.append(kandidat)
+    for bagian in os.environ.get("MM_SKILL_DIRS", "").split(","):
+        bagian = bagian.strip()
+        if bagian:
+            lokasi.append(Path(bagian))
+    return lokasi
+
+
 def cek(root):
     gagal, peringat = [], []
     skill = root / "SKILL.md"
@@ -83,13 +103,16 @@ def cek(root):
     if nomor != list(range(1, len(nomor) + 1)):
         gagal.append("penomoran section tidak berurutan: %s" % nomor)
 
-    # 4. path relatif yang dirujuk harus ada (root, atau lintas-skill di folder tetangga)
+    # 4. path relatif yang dirujuk harus ada (root, folder tetangga, atau
+    #    lokasi pemasangan skill yang dikenal — lihat dir_pencarian_lintas)
     for rujukan in sorted(set(re.findall(r"`((?:scripts|assets|references)/[^`]+?)`", teks))):
         target = rujukan.rstrip("/")
         if (root / target).exists():
             continue
-        tetangga = list((root.parent).glob("*/" + target))
-        if not tetangga:
+        ditemukan = any(
+            list(induk.glob("*/" + target)) for induk in dir_pencarian_lintas(root)
+        )
+        if not ditemukan:
             gagal.append("path yang dirujuk tidak ada: %s" % rujukan)
 
     # 5. nama terlarang & penggalan ejaan lama

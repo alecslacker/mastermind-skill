@@ -44,3 +44,9 @@ Baca sebelum operasi baru; tulis entri baru di bawah. Tanpa tanggal = tidak berl
 - bukti: pdftotext ic3_2024.txt baris 279 (BEC 21.442) & 370 ($2.770.151.146); curl english.news.cn/20261117/...; PDF + wiki_mfa.json dibersihkan setelahnya, tak di-commit
 - jebakan: URL PDF IC3 = /AnnualReport/Reports/YYYY_IC3Report.pdf (bukan /Files/Reports/); "deepfake" BUKAN kategori sendiri di laporan IC3 — jangan dikutip sebagai angka deepfake; kasus $25 jt (2023, suara CFO) = media, tak ke primer
 - ulang: curl -sL https://www.ic3.gov/AnnualReport/Reports/2024_IC3Report.pdf -o ic3_2024.pdf && pdftotext -enc UTF-8 ic3_2024.pdf | grep -i "business email"
+
+## [2026-11-27] verif.py — resolusi lintas-skill ke lokasi skill terpasang; .gitignore diperluas
+- hasil: cek path rujukan kini mencari di induk repo + lokasi pemasangan lazim (~/.zcode/.agents/.trae/.claude skills) + env MM_SKILL_DIRS (koma, opsional); symlink/salinan `rea-skill` di luar repo dihapus semuanya [TERBUKTI]
+- bukti: verif.py exit 0 di repo utama TANPA symlink apa pun; uji negatif: rujukan palsu `references/palsu-tidak-ada.md` tersisip di salinan uji → tertangkap; salinan Hermes di-sync ulang pasca-commit
+- jebakan: `ln -sfn` Git Bash dengan target format `C:/...` TIDAK membuat symlink — dia menyalin direktori (30 entri skill REA dobel di dua lokasi); hapus dengan rm -rf setelah dicek isinya; junction/symlink asli dibedakan lewat `cmd //c dir` (kolom <JUNCTION> vs <DIR>)
+- ulang: python3 scripts/verif.py (tanpa symlink) && python3 ~/Hermes-Kerja/skills-dci/mastermind/scripts/verif.py
