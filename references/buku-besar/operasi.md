@@ -32,3 +32,9 @@ Baca sebelum operasi baru; tulis entri baru di bawah. Tanpa tanggal = tidak berl
 - bukti: verif.py exit 0 (env penuh + REA tetangga) setelah perubahan; commit repo
 - jebakan: G8 pernah melanggar doktrinnya sendiri — bullet 6 menyalin aturan §3.1 padahal G8 mewajibkan penunjuk, bukan salinan
 - ulang: python3 scripts/verif.py
+
+## [2026-11-27] skill mastermind — pembaruan vektor SE/phishing/carding 2024–2026
+- hasil: §8 Halaman scam + subbagian "Vektor 2024–2026" (MFA fatigue, OAuth code phishing/PKCE, AI/LLM personalisasi, deepfake vishing, 3DS2, kloning QRIS fisik); §8 carding +3DS2/network token; §9 korpus ID + INT +2–3 modus baru; jebakan #7 (CVE salah kutip) [TERBUKTI sebagian]
+- bukti: RFC 7636 (PKCE, Sept 2015) & RFC 8252 terverifikasi via IETF datatracker; CVE-2024-38102 = DoS driver (BUKAN MFA fatigue) via NVD API. Statistik FBI IC3 & rilis BI QRIS = [perlu verifikasi] — akses jaringan terputus saat riset; tandai, jangan dikarang.
+- jebakan: WebFetch SSL fail massal + curl sering kosong — riset via NVD API (JSON) paling andal di mesin ini
+- ulang: curl -s "https://services.nvd.nist.gov/rest/json/cves/2.0?cveId=CVE-2024-38102"
