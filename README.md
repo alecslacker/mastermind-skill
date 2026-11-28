@@ -76,6 +76,7 @@ Di bawah kedua wujud itu berjalan **doktrin ke-segala-gaan** (§3 SKILL.md):
 | `SKILL.md` | Seluruh aturan persona. Ini berkas utama. |
 | `scripts/panintel.py` | Triase dump PAN: validasi Luhn, cocok BIN, masker, audit, generator data uji. |
 | `scripts/patcher.py` | Patch biner berbasis profil JSON, cadangan otomatis, `--restore`. |
+| `scripts/vpn.py` | Kendali OpenVPN Connect (status/connect/disconnect) untuk egress terkontrol. |
 | `scripts/verif.py` | Uji integritas skill: fence, penomoran §, path rujukan, frontmatter, nama terlarang. |
 | `references/contoh-patch.md` | Alur patch + bukti uji nyata, termasuk rantai REA. |
 | `references/buku-besar/` | Memori lintas sesi: entri operasi, proteksi target, daftar alat, jebakan. |
@@ -106,16 +107,17 @@ Prasyarat alat — semuanya opsional kecuali Python untuk skrip:
 
 | Kebutuhan | Untuk apa | Wajib? | Versi |
 |---|---|---|---|
-| Python | `scripts/panintel.py`, `scripts/patcher.py`, `scripts/verif.py` | Ya, bila memakai skrip | 3.9+ |
+| Python | `scripts/panintel.py`, `scripts/patcher.py`, `scripts/vpn.py`, `scripts/verif.py` | Ya, bila memakai skrip | 3.9+ |
 | Docker + Compose | `assets/lab/docker-compose.yml` | Tidak | Docker 24+ |
 | `gcc` | mengompilasi `assets/crackme/crackme.c` | Tidak | apa pun yang mendukung C99 |
+| OpenVPN Connect (app desktop) | `scripts/vpn.py` mengendalikan koneksinya | Tidak | Windows |
 | Node.js | integrasi MCP REA | Tidak | 20+ |
 | Ghidra + JDK | provider analisis REA | Tidak | Ghidra 12.x + JDK 21 |
 | YARA / SIEM | menjalankan `assets/detection/` | Tidak | — |
 
-**Nol dependensi pihak ketiga.** Impor yang dipakai: `argparse`, `hashlib`, `json`, `os`, `pathlib`, `random`, `re`, `sys` — semuanya pustaka standar Python. Tidak ada `requirements.txt` karena tidak ada yang perlu dipasang. Alasan: alat keamanan yang butuh belasan paket lebih rapuh dan lebih sulit diaudit.
+**Nol dependensi pihak ketiga.** Impor yang dipakai: `argparse`, `hashlib`, `json`, `os`, `pathlib`, `platform`, `random`, `re`, `subprocess`, `sys`, `time` — semuanya pustaka standar Python. Tidak ada `requirements.txt` karena tidak ada yang perlu dipasang. Alasan: alat keamanan yang butuh belasan paket lebih rapuh dan lebih sulit diaudit.
 
-Tidak ada network call di kedua skrip. `panintel.py` menolak memakai socket; `patcher.py` hanya menyentuh berkas lokal yang diberikan.
+`panintel.py` menolak memakai socket; `patcher.py` hanya menyentuh berkas lokal yang diberikan; `vpn.py` tidak membuka socket sendiri — ia hanya membaca state lokal dan meluncurkan app OpenVPN Connect yang sudah terpasang.
 
 
 ## Cara kerja
@@ -198,6 +200,19 @@ python scripts/patcher.py --file app.exe --profil p.json --restore
 Keluar 0 berhasil, 1 galat, 2 hash tidak cocok, 3 offset tidak sesuai, 4 sudah terpatch, 5 tanpa cadangan.
 
 Bukti uji ada di `references/contoh-patch.md`: patch banner `curl.exe` sampai berubah perilaku, lalu dipulihkan dengan hash kembali identik.
+
+### `scripts/vpn.py`
+
+Kendali OpenVPN Connect desktop untuk aktivitas yang butuh egress terkontrol (dark web, OSINT identitas, penelusuran IP). Membaca state koneksi dari `%APPDATA%\OpenVPN Connect\config.json` dan memicu connect/disconnect lewat flag command-line app. Windows saja.
+
+```bash
+python scripts/vpn.py profiles                 # daftar profil (id + nama)
+python scripts/vpn.py status                   # sedang terhubung? + IP TUN
+python scripts/vpn.py connect 1767186941079    # hubungkan (id atau nama profil)
+python scripts/vpn.py disconnect               # putuskan koneksi aktif
+```
+
+Keluar 0 tujuan tercapai, 1 masalah lingkungan (app tak ditemukan), 2 keadaan tak berubah/bertentangan. "Terhubung" ditentukan dari IPv4 non-link-local di adapter TUN, bukan dari state app (yang persisten/stale) — lihat catatan di kode.
 
 ### `scripts/verif.py`
 
